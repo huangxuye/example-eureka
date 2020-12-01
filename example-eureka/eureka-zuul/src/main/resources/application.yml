@@ -1,0 +1,30 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: eureka-zuul
+
+# Eureka的配置,服务注册到哪里
+eureka:
+  client:
+    service-url:
+      #多个eureka service集群之间用逗号分隔
+      defaultZone: http://127.0.0.1:7001/eureka/
+  instance:
+    instance-id: eureka-zuul-9999 # 修改eureka上的默认描述信息
+    prefer-ip-address: true
+
+# info配置
+info:
+  app.name: example-zuul
+  company.name: com.wxuy.example.eureka
+
+# 路由网关配置
+zuul:
+  routes:
+    mydept.serviceId: eureka-provider
+    mydept.path: /eureka-zuul/**
+  # 不能再使用这个路径访问了，ignore : 忽略 | “*” 隐藏全部的微服务真实路径
+  ignored-services: "*"
+  prefix: /wxuy # 公共设置的前缀
